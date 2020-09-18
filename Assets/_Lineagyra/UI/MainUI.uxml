@@ -1,7 +1,7 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="False">
     <ui:VisualElement name="main" style="flex-grow: 1; align-items: center; background-color: rgba(0, 0, 0, 0);">
         <Style src="MainUI.uss" />
-        <ui:VisualElement name="container" style="width: 400px; flex-grow: 1; background-color: rgba(0, 0, 0, 0.89); padding-top: 16px; color: rgb(41, 41, 41); font-size: 16px; display: flex;">
+        <ui:VisualElement name="container" style="width: 400px; flex-grow: 1; background-color: rgba(0, 0, 0, 0.54); padding-top: 16px; color: rgb(41, 41, 41); font-size: 16px; display: flex;">
             <ui:Label text="Lineagyra" display-tooltip-when-elided="True" style="color: rgb(255, 255, 255); -unity-text-align: middle-center; margin-bottom: 16px; justify-content: center;" />
             <ui:VisualElement name="header" style="height: auto; width: auto; flex-direction: row; justify-content: center; align-items: center; background-color: rgba(0, 0, 0, 0.8); margin-bottom: 16px;">
                 <ui:Button text="Camera" display-tooltip-when-elided="True" name="camera" />
@@ -10,12 +10,12 @@
                 <ui:Button text="Advanced" display-tooltip-when-elided="True" name="advanced" />
             </ui:VisualElement>
             <ui:VisualElement name="body" style="flex-grow: 1; padding-left: 16px; padding-right: 16px;">
-                <ui:VisualElement name="cameraContainer" class="pageContainer" style="flex-grow: 1; justify-content: flex-start; visibility: visible; display: flex;">
+                <ui:VisualElement name="cameraContainer" class="pageContainer" style="flex-grow: 1; justify-content: flex-start; visibility: visible; display: none;">
                     <ui:Slider picking-mode="Ignore" label="Field of View" value="90" high-value="179" name="fieldOfView" low-value="1" class="control">
                         <ui:Label text="1" display-tooltip-when-elided="True" name="sliderMin" style="position: absolute; top: 14px; left: 155px; right: auto; font-size: 8px; -unity-text-align: upper-right; margin-left: 0; margin-right: 0; margin-top: 0; margin-bottom: 0; padding-bottom: 0;" />
                         <ui:Label text="179" display-tooltip-when-elided="True" name="sliderMax" style="position: absolute; top: 14px; left: auto; right: 0; font-size: 8px; -unity-text-align: upper-right; margin-left: 0; margin-right: 0; margin-top: 0; margin-bottom: 0; padding-bottom: 0;" />
                     </ui:Slider>
-                    <ui:Toggle label="Bloom" name="bloomToggle" value="true" class="control" style="color: rgba(255, 255, 255, 255);" />
+                    <ui:Toggle label="Bloom" name="bloomToggle" value="true" class="control" style="color: rgb(255, 255, 255);" />
                     <ui:Slider picking-mode="Ignore" label="Bloom Strength" value="1" high-value="2" name="bloomStrength" class="control">
                         <ui:Label text="0" display-tooltip-when-elided="True" name="sliderMin" style="position: absolute; top: 14px; left: 155px; right: auto; font-size: 8px; -unity-text-align: upper-right; margin-left: 0; margin-right: 0; margin-top: 0; margin-bottom: 0; padding-bottom: 0;" />
                         <ui:Label text="2" display-tooltip-when-elided="True" name="sliderMax" style="position: absolute; top: 14px; left: auto; right: 0; font-size: 8px; -unity-text-align: upper-right; margin-left: 0; margin-right: 0; margin-top: 0; margin-bottom: 0; padding-bottom: 0;" />
@@ -24,20 +24,25 @@
                         <ui:Label text="0" display-tooltip-when-elided="True" name="sliderMin" style="position: absolute; top: 14px; left: 155px; right: auto; font-size: 8px; -unity-text-align: upper-right; margin-left: 0; margin-right: 0; margin-top: 0; margin-bottom: 0; padding-bottom: 0;" />
                         <ui:Label text="1" display-tooltip-when-elided="True" name="sliderMax" style="position: absolute; top: 14px; left: auto; right: 0; font-size: 8px; -unity-text-align: upper-right; margin-left: 0; margin-right: 0; margin-top: 0; margin-bottom: 0; padding-bottom: 0;" />
                     </ui:Slider>
-                    <ui:Slider picking-mode="Ignore" label="Pattern Size" value="1.25" high-value="2" low-value="0.5" name="patternSize" class="control">
+                    <ui:Slider picking-mode="Ignore" label="Zoom" value="1.25" high-value="2" low-value="0.5" name="zoom" class="control">
                         <ui:Label text="200%" display-tooltip-when-elided="True" name="sliderMax" style="position: absolute; top: 14px; left: auto; right: 0; font-size: 8px; -unity-text-align: upper-right; margin-left: 0; margin-right: 0; margin-top: 0; margin-bottom: 0; padding-bottom: 0;" />
                         <ui:Label text="50%" display-tooltip-when-elided="True" name="sliderMin" style="position: absolute; top: 14px; left: 155px; right: auto; font-size: 8px; -unity-text-align: upper-right; margin-left: 0; margin-right: 0; margin-top: 0; margin-bottom: 0; padding-bottom: 0;" />
                     </ui:Slider>
                 </ui:VisualElement>
-                <ui:VisualElement name="patternContainer" class="pageContainer" style="flex-grow: 1; justify-content: flex-start; visibility: visible; display: none;">
-                    <ui:Slider picking-mode="Ignore" label="Line Interval" value="4" high-value="20" name="lineInterval" low-value="1" class="control">
+                <ui:VisualElement name="patternContainer" class="pageContainer" style="flex-grow: 1; justify-content: flex-start; visibility: visible; display: flex;">
+                    <ui:Slider picking-mode="Ignore" label="Line Interval" value="4" high-value="20" name="lineInterval" low-value="1" class="control" style="display: none;">
                         <ui:Label text="1" display-tooltip-when-elided="True" name="sliderMin" style="position: absolute; top: 14px; left: 155px; right: auto; font-size: 8px; -unity-text-align: upper-right; margin-left: 0; margin-right: 0; margin-top: 0; margin-bottom: 0; padding-bottom: 0;" />
                         <ui:Label text="20" display-tooltip-when-elided="True" name="sliderMax" style="position: absolute; top: 14px; left: auto; right: 0; font-size: 8px; -unity-text-align: upper-right; margin-left: 0; margin-right: 0; margin-top: 0; margin-bottom: 0; padding-bottom: 0;" />
                     </ui:Slider>
-                    <ui:Slider picking-mode="Ignore" label="Time Step" value="0.02" high-value="0.05" name="timeStep" low-value="0.001" class="control">
+                    <ui:Slider picking-mode="Ignore" label="Pattern Duration" value="20" high-value="50" name="patternDuration" low-value="1" class="control" style="display: none;">
+                        <ui:Label text="1" display-tooltip-when-elided="True" name="sliderMin" style="position: absolute; top: 14px; left: 155px; right: auto; font-size: 8px; -unity-text-align: upper-right; margin-left: 0; margin-right: 0; margin-top: 0; margin-bottom: 0; padding-bottom: 0;" />
+                        <ui:Label text="120" display-tooltip-when-elided="True" name="sliderMax" style="position: absolute; top: 14px; left: auto; right: 0; font-size: 8px; -unity-text-align: upper-right; margin-left: 0; margin-right: 0; margin-top: 0; margin-bottom: 0; padding-bottom: 0;" />
+                    </ui:Slider>
+                    <ui:Slider picking-mode="Ignore" label="Pattern Detail" value="20" high-value="50" name="timeStep" low-value="1" class="control">
                         <ui:Label text="1" display-tooltip-when-elided="True" name="sliderMin" style="position: absolute; top: 14px; left: 155px; right: auto; font-size: 8px; -unity-text-align: upper-right; margin-left: 0; margin-right: 0; margin-top: 0; margin-bottom: 0; padding-bottom: 0;" />
                         <ui:Label text="50" display-tooltip-when-elided="True" name="sliderMax" style="position: absolute; top: 14px; left: auto; right: 0; font-size: 8px; -unity-text-align: upper-right; margin-left: 0; margin-right: 0; margin-top: 0; margin-bottom: 0; padding-bottom: 0;" />
                     </ui:Slider>
+                    <ui:Label text="Hardware Requirements: " display-tooltip-when-elided="True" name="hardwareRequirements" style="-unity-text-align: upper-center; font-size: 12px; margin-bottom: 8px; display: none;" />
                     <ui:Toggle label="Draw Lines" name="drawLines" value="true" class="control" style="color: rgb(255, 255, 255);" />
                     <ui:Slider picking-mode="Ignore" label="Line Opacity" value="0.04" high-value="1" name="lineOpacity" class="control">
                         <ui:Label text="100%" display-tooltip-when-elided="True" name="sliderMax" style="position: absolute; top: 14px; left: auto; right: 0; font-size: 8px; -unity-text-align: upper-right; margin-left: 0; margin-right: 0; margin-top: 0; margin-bottom: 0; padding-bottom: 0;" />
@@ -48,15 +53,12 @@
                         <ui:Label text="0%" display-tooltip-when-elided="True" name="sliderMin" style="position: absolute; top: 14px; left: 155px; right: auto; font-size: 8px; -unity-text-align: upper-right; margin-left: 0; margin-right: 0; margin-top: 0; margin-bottom: 0; padding-bottom: 0;" />
                         <ui:Label text="100%" display-tooltip-when-elided="True" name="sliderMax" style="position: absolute; top: 14px; left: auto; right: 0; font-size: 8px; -unity-text-align: upper-right; margin-left: 0; margin-right: 0; margin-top: 0; margin-bottom: 0; padding-bottom: 0;" />
                     </ui:Slider>
-                    <ui:Toggle label="Auto-Scale Lines" name="scaleLinesToRadius" value="true" class="control" style="color: rgb(255, 255, 255);" />
+                    <ui:Toggle label="Auto-Scale Lines" name="autoScaleLines" value="true" class="control" style="color: rgb(255, 255, 255); margin-top: 8px;" />
                 </ui:VisualElement>
                 <ui:VisualElement name="generatorContainer" class="pageContainer" style="flex-grow: 1; justify-content: flex-start; visibility: visible; display: none;">
                     <ui:Toggle label="3D Mode" name="3dModeToggle" value="true" class="control" style="color: rgb(255, 255, 255);" />
-                    <ui:Slider picking-mode="Ignore" label="Auto Shuffle Mode" value="1" high-value="2" name="autoShuffleMode" class="control">
-                        <ui:Label text="Off" display-tooltip-when-elided="True" name="sliderMin" style="position: absolute; top: 14px; left: 155px; right: auto; font-size: 8px; -unity-text-align: upper-right; margin-left: 0; margin-right: 0; margin-top: 0; margin-bottom: 0; padding-bottom: 0;" />
-                        <ui:Label text="Oscillate" display-tooltip-when-elided="True" name="sliderMid" style="position: absolute; top: 14px; left: 242.2px; right: auto; font-size: 8px; -unity-text-align: upper-right; margin-left: 0; margin-right: 0; margin-top: 0; margin-bottom: 0; padding-bottom: 0;" />
-                        <ui:Label text="Linear" display-tooltip-when-elided="True" name="sliderMax" style="position: absolute; top: 14px; left: auto; right: 0; font-size: 8px; -unity-text-align: upper-right; margin-left: 0; margin-right: 0; margin-top: 0; margin-bottom: 0; padding-bottom: 0;" />
-                    </ui:Slider>
+                    <ui:Toggle label="Oscillate Timespan" name="oscillateTimespan" value="true" class="control" style="color: rgb(255, 255, 255);" />
+                    <ui:Toggle label="Auto Shuffle" name="autoShuffle" value="true" class="control" style="color: rgb(255, 255, 255);" />
                     <ui:Slider picking-mode="Ignore" label="Auto Shuffle Period" value="1" high-value="2" name="autoShufflePeriod" class="control">
                         <ui:Label text="1s" display-tooltip-when-elided="True" name="sliderMin" style="position: absolute; top: 14px; left: 155px; right: auto; font-size: 8px; -unity-text-align: upper-right; margin-left: 0; margin-right: 0; margin-top: 0; margin-bottom: 0; padding-bottom: 0;" />
                         <ui:Label text="30s" display-tooltip-when-elided="True" name="sliderMax" style="position: absolute; top: 14px; left: auto; right: 0; font-size: 8px; -unity-text-align: upper-right; margin-left: 0; margin-right: 0; margin-top: 0; margin-bottom: 0; padding-bottom: 0;" />
@@ -65,13 +67,17 @@
                         <ui:Label text="3" display-tooltip-when-elided="True" name="sliderMin" style="position: absolute; top: 14px; left: 155px; right: auto; font-size: 8px; -unity-text-align: upper-right; margin-left: 0; margin-right: 0; margin-top: 0; margin-bottom: 0; padding-bottom: 0;" />
                         <ui:Label text="16" display-tooltip-when-elided="True" name="sliderMax" style="position: absolute; top: 14px; left: auto; right: 0; font-size: 8px; -unity-text-align: upper-right; margin-left: 0; margin-right: 0; margin-top: 0; margin-bottom: 0; padding-bottom: 0;" />
                     </ui:Slider>
+                    <ui:VisualElement name="patternButtons" style="align-items: center; flex-direction: row; justify-content: center;">
+                        <ui:Button text="Previous Pattern" display-tooltip-when-elided="True" name="previousPattern" style="margin-left: 0; margin-right: 8px; margin-top: 0; margin-bottom: 0; color: rgb(255, 255, 255); width: auto; border-left-width: 0; border-right-width: 0; border-top-width: 0; border-bottom-width: 0; border-top-left-radius: 0; border-bottom-left-radius: 0; border-top-right-radius: 0; border-bottom-right-radius: 0;" />
+                        <ui:Button text="Next Pattern" display-tooltip-when-elided="True" name="nextPattern" style="margin-left: 8px; margin-right: 0; margin-top: 0; margin-bottom: 0; color: rgb(255, 255, 255); width: auto; border-left-width: 0; border-right-width: 0; border-top-width: 0; border-bottom-width: 0; border-top-left-radius: 0; border-bottom-left-radius: 0; border-top-right-radius: 0; border-bottom-right-radius: 0;" />
+                    </ui:VisualElement>
                 </ui:VisualElement>
                 <ui:VisualElement name="advancedContainer" class="pageContainer" style="flex-grow: 1; justify-content: flex-start; visibility: visible; display: none;">
                     <ui:Label text="Coming Soon..." display-tooltip-when-elided="True" style="-unity-text-align: upper-center;" />
                 </ui:VisualElement>
             </ui:VisualElement>
             <ui:VisualElement name="footer" style="height: 32px; margin-bottom: 16px; align-items: center;">
-                <ui:Button text="Close Menu" display-tooltip-when-elided="True" name="closeMenu" style="margin-left: 0; margin-right: 0; margin-top: 0; margin-bottom: 0; color: rgba(255, 255, 255, 255); width: 200px; border-left-width: 0; border-right-width: 0; border-top-width: 0; border-bottom-width: 0; border-top-left-radius: 0; border-bottom-left-radius: 0; border-top-right-radius: 0; border-bottom-right-radius: 0;" />
+                <ui:Button text="Close Menu" display-tooltip-when-elided="True" name="closeMenu" style="margin-left: 0; margin-right: 0; margin-top: 0; margin-bottom: 0; color: rgb(255, 255, 255); width: 200px; border-left-width: 0; border-right-width: 0; border-top-width: 0; border-bottom-width: 0; border-top-left-radius: 0; border-bottom-left-radius: 0; border-top-right-radius: 0; border-bottom-right-radius: 0;" />
             </ui:VisualElement>
         </ui:VisualElement>
     </ui:VisualElement>

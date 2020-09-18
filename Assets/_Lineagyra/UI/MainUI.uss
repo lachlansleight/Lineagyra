@@ -1,12 +1,12 @@
 #header > Button.selected {
-    border-bottom-color: rgba(255, 255, 255, 255);
+    border-bottom-color: rgb(255, 255, 255);
     border-bottom-width: 2px;
     top: 1px;
 }
 
 #header > Button {
     font-size: 12px;
-    color: rgba(255, 255, 255, 255);
+    color: rgb(255, 255, 255);
     background-color: rgba(0, 0, 0, 0);
     border-left-color: rgb(0, 0, 0);
     border-right-color: rgb(0, 0, 0);
@@ -31,11 +31,11 @@
 }
 
 Button:hover {
-    background-color: rgba(36, 36, 36, 255);
+    background-color: rgb(36, 36, 36);
 }
 
 .control > Label {
-    color: rgba(255, 255, 255, 255);
+    color: rgb(255, 255, 255);
     -unity-text-align: upper-right;
     margin-right: 8px;
 }
@@ -45,11 +45,11 @@ Button:hover {
 }
 
 Label {
-    color: rgba(255, 255, 255, 255);
+    color: rgb(255, 255, 255);
 }
 
 Button {
-    background-color: rgba(0, 0, 0, 255);
+    background-color: rgb(0, 0, 0);
     padding-left: 8px;
     padding-right: 8px;
     padding-top: 8px;
