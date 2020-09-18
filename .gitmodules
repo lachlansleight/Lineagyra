@@ -1,0 +1,6 @@
+[submodule "Assets/LineCircles"]
+	path = Assets/LineCircles
+	url = https://github.com/lachlansleight/LineCirclesPackage.git
+[submodule "Assets/Lunity"]
+	path = Assets/Lunity
+	url = https://github.com/lachlansleight/Lunity.git
