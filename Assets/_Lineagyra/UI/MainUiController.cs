@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using LineCircles;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -13,11 +14,23 @@ public class MainUiController : MonoBehaviour
     private Button[] _navButtons;
     private VisualElement[] _pages;
 
+    private Camera _camera;
+    private LineCircle _lineCircle;
+    private Shuffler _shuffler;
+    private TimeStepper _timeStepper;
+    private SnapToBounds _snapToBounds;
+
     private bool _menuVisible;
     
     private void OnEnable()
     {
         _ui = GetComponent<UIDocument>();
+        _camera = FindObjectOfType<Camera>();
+        _lineCircle = FindObjectOfType<LineCircle>();
+        _shuffler = FindObjectOfType<Shuffler>();
+        _timeStepper = FindObjectOfType<TimeStepper>();
+        _snapToBounds = FindObjectOfType<SnapToBounds>();
+        
         _main = _ui.rootVisualElement.Q("main");
         var header = _ui.rootVisualElement.Q("header");
         _navButtons = new [] {
@@ -38,8 +51,17 @@ public class MainUiController : MonoBehaviour
             var index = i;
             _navButtons[i].clicked += () => NavigateToPage(index);
         }
-
         _main.Q<Button>("closeMenu").clicked += () => SetMenu(false);
+
+        var fovSlider = body.Q<Slider>("fieldOfView");
+        fovSlider.value = _camera.fieldOfView;
+        fovSlider.RegisterCallback<ChangeEvent<float>>(e => _camera.fieldOfView = e.newValue);
+        
+        //TODO: Add bloom sliders after adding post processing package
+        
+        var patternSize = body.Q<Slider>("patternSize");
+        patternSize.value = _snapToBounds.SizeMultiplier;
+        patternSize.RegisterCallback<ChangeEvent<float>>(e => _snapToBounds.SizeMultiplier = e.newValue);
 
         NavigateToPage(0);
         SetMenu(false);
