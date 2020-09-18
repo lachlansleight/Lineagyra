@@ -257,6 +257,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4568217429272618395, guid: 0bf6454aa9847fe45bc1db41df6f1041, type: 3}
+      propertyPath: Generator.GlobalMaximumFrequency
+      value: 0.01
+      objectReference: {fileID: 0}
     - target: {fileID: 4568217429272618397, guid: 0bf6454aa9847fe45bc1db41df6f1041, type: 3}
       propertyPath: m_Name
       value: Lineagyra
