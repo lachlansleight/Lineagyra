@@ -1,0 +1,57 @@
+#header > Button.selected {
+    border-bottom-color: rgba(255, 255, 255, 255);
+    border-bottom-width: 2px;
+    top: 1px;
+}
+
+#header > Button {
+    font-size: 12px;
+    color: rgba(255, 255, 255, 255);
+    background-color: rgba(0, 0, 0, 0);
+    border-left-color: rgb(0, 0, 0);
+    border-right-color: rgb(0, 0, 0);
+    border-top-color: rgb(0, 0, 0);
+    border-bottom-color: rgb(0, 0, 0);
+    border-left-width: 0;
+    border-right-width: 0;
+    border-top-width: 0;
+    border-bottom-width: 0;
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+    margin-left: 0;
+    margin-right: 0;
+    margin-top: 0;
+    margin-bottom: 0;
+    padding-left: 8px;
+    padding-right: 8px;
+    padding-top: 8px;
+    padding-bottom: 8px;
+}
+
+Button:hover {
+    background-color: rgba(36, 36, 36, 255);
+}
+
+.control > Label {
+    color: rgba(255, 255, 255, 255);
+    -unity-text-align: upper-right;
+    margin-right: 8px;
+}
+
+.pageContainer > .control {
+    margin-bottom: 8px;
+}
+
+Label {
+    color: rgba(255, 255, 255, 255);
+}
+
+Button {
+    background-color: rgba(0, 0, 0, 255);
+    padding-left: 8px;
+    padding-right: 8px;
+    padding-top: 8px;
+    padding-bottom: 8px;
+}
