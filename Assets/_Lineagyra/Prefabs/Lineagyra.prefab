@@ -102,7 +102,7 @@ MonoBehaviour:
   LineOpacity: 0.05
   DrawFill: 1
   FillOpacity: 0.05
-  AutoScaleLines: 0
+  AutoScaleLines: 1
 --- !u!114 &2750923036624092241
 MonoBehaviour:
   m_ObjectHideFlags: 0

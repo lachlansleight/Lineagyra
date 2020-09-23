@@ -296,10 +296,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 4568217429272618395, guid: 0bf6454aa9847fe45bc1db41df6f1041, type: 3}
-      propertyPath: Generator.GlobalMaximumFrequency
-      value: 0.2
-      objectReference: {fileID: 0}
     - target: {fileID: 4568217429272618397, guid: 0bf6454aa9847fe45bc1db41df6f1041, type: 3}
       propertyPath: m_Name
       value: Lineagyra
@@ -545,6 +541,10 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2926422969724209469, guid: b1947e6d5b49a9044be7cd2f280c0855, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2926422969776777372, guid: b1947e6d5b49a9044be7cd2f280c0855, type: 3}
       propertyPath: m_AnchorMin.y
       value: 1
@@ -656,6 +656,10 @@ PrefabInstance:
     - target: {fileID: 2926422969966465671, guid: b1947e6d5b49a9044be7cd2f280c0855, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2926422970052191888, guid: b1947e6d5b49a9044be7cd2f280c0855, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2926422970061681139, guid: b1947e6d5b49a9044be7cd2f280c0855, type: 3}
       propertyPath: m_AnchorMax.y
@@ -968,6 +972,10 @@ PrefabInstance:
     - target: {fileID: 2926422970822076346, guid: b1947e6d5b49a9044be7cd2f280c0855, type: 3}
       propertyPath: m_SizeDelta.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2926422970844191200, guid: b1947e6d5b49a9044be7cd2f280c0855, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2926422970957007597, guid: b1947e6d5b49a9044be7cd2f280c0855, type: 3}
       propertyPath: m_AnchorMin.y
