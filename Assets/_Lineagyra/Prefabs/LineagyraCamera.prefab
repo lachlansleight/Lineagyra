@@ -157,7 +157,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 76c312562fcd7a247919b55d575d42f6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  PanSensitivity: 1
-  ZoomSensitivity: 4
-  OrbitSensitivity: 2
-  InteroplationFactor: 4
+  PanSensitivity: 0.25
+  ZoomSensitivity: 1
+  OrbitSensitivity: 3
+  InteroplationFactor: 8

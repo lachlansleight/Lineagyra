@@ -12,6 +12,7 @@ public class MainUiController : MonoBehaviour
     private Button[] _navButtons;
     private GameObject[] _pages;
     private GameObject _mainPanel;
+    private Slider _fovSlider;
 
     private Camera _camera;
     private LineCircle _lineCircle;
@@ -20,6 +21,7 @@ public class MainUiController : MonoBehaviour
     private SnapToBounds _snapToBounds;
     private PatternOverrides _patternOverrides;
     private PostProcessProfile _post;
+    private CameraControl _cameraControl;
 
     private bool _menuVisible;
     
@@ -32,14 +34,15 @@ public class MainUiController : MonoBehaviour
         _snapToBounds = FindObjectOfType<SnapToBounds>();
         _patternOverrides = FindObjectOfType<PatternOverrides>();
         _post = FindObjectOfType<PostProcessVolume>().profile;
+        _cameraControl = FindObjectOfType<CameraControl>();
 
         _mainPanel = transform.Find("Container").gameObject;
         
         var mainPanelTransform = _mainPanel.transform;
         SetupContainerControls(mainPanelTransform);
-        SetupCameraControls(mainPanelTransform);
-        SetupPatternControls(mainPanelTransform);
-        SetupGeneratorControls(mainPanelTransform);
+        SetupCameraControls();
+        SetupPatternControls();
+        SetupGeneratorControls();
 
         NavigateToPage(0);
         SetMenu(false);
@@ -70,14 +73,14 @@ public class MainUiController : MonoBehaviour
     }
 
 
-    private void SetupCameraControls(Transform container)
+    private void SetupCameraControls()
     {
         var panel = _pages[0].transform;
         
         //Field of View
-        var fovSlider = panel.Find("FieldOfView/Slider").GetComponent<Slider>();
-        fovSlider.value = _camera.fieldOfView;
-        fovSlider.onValueChanged.AddListener((newValue => _camera.fieldOfView = newValue));
+        _fovSlider = panel.Find("FieldOfView/Slider").GetComponent<Slider>();
+        _fovSlider.value = _camera.fieldOfView;
+        _fovSlider.onValueChanged.AddListener((newValue => _camera.fieldOfView = newValue));
         
         //Bloom Toggle
         var bloomToggle = panel.Find("Bloom/Toggle").GetComponent<Toggle>();
@@ -108,14 +111,9 @@ public class MainUiController : MonoBehaviour
             _post.TryGetSettings(out Bloom bloomF);
             bloomF.threshold.value = newValue;
         });
-        
-        //Pattern Size
-        var patternSize = panel.Find("Zoom/Slider").GetComponent<Slider>();
-        patternSize.value = _snapToBounds.SizeMultiplier;
-        patternSize.onValueChanged.AddListener(newValue => _snapToBounds.SizeMultiplier = newValue);
     }
 
-    private void SetupPatternControls(Transform container)
+    private void SetupPatternControls()
     {
         var panel = _pages[1].transform;
         
@@ -155,7 +153,7 @@ public class MainUiController : MonoBehaviour
         autoScaleLines.onValueChanged.AddListener(newValue => _patternOverrides.AutoScaleLines = newValue);
     }
 
-    private void SetupGeneratorControls(Transform container)
+    private void SetupGeneratorControls()
     {
         var panel = _pages[2].transform;
         
@@ -209,6 +207,12 @@ public class MainUiController : MonoBehaviour
     {
         _mainPanel.SetActive(visible);
         _menuVisible = visible;
+
+        if (_menuVisible) {
+            _fovSlider.value = _camera.fieldOfView;
+        }
+
+        _cameraControl.enabled = !_menuVisible;
     }
 
     private void NavigateToPage(int page)

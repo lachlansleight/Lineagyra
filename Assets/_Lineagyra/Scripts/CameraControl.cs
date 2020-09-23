@@ -28,7 +28,8 @@ public class CameraControl : MonoBehaviour
     private Vector3 _cameraOffset;
 
     private Vector3 _targetPosition;
-    private float _targetFov;
+    private float _targetFovSize;
+    private float _fovSize;
     private Quaternion _targetRotation;
     
     private void Awake()
@@ -39,19 +40,20 @@ public class CameraControl : MonoBehaviour
         _lineCircle = FindObjectOfType<LineCircle>();
         _shuffler = FindObjectOfType<Shuffler>();
         _snapToBounds = FindObjectOfType<SnapToBounds>();
-        
-        _orbitReference = new GameObject("Orbit Reference").transform;
 
         _lineCircle.OnPatternChanged += HandlePatternChanged;
 
-        _targetFov = _camera.fieldOfView;
+        _targetFovSize = FovToSize(_camera.fieldOfView, _snapToBounds.PerspectiveCenterDistance);
+        _fovSize = _targetFovSize;
 
+        _orbitReference = new GameObject("Orbit Reference").transform;
+        _orbitReference.position = new Vector3(0f, 0f, _snapToBounds.PerspectiveCenterDistance);
         UpdateCameraPosition();
     }
 
     private void HandlePatternChanged(object sender, EventArgs e)
     {
-        ResetCamera();
+        ResetCamera(true);
         _rotationEnabled = !_shuffler.Generator.RestrictThirdDimension;
     }
 
@@ -83,20 +85,30 @@ public class CameraControl : MonoBehaviour
                 _dirtyFov = true;
                 _preChangeFov = _camera.fieldOfView;
             }
-            _targetFov = Mathf.Clamp(_camera.fieldOfView - ZoomSensitivity, 1f, 179f);
+            _targetFovSize = Mathf.Clamp(
+                _targetFovSize / (1f + ZoomSensitivity), 
+                FovToSize(0f, _snapToBounds.PerspectiveCenterDistance), 
+                FovToSize(179f, _snapToBounds.PerspectiveCenterDistance)
+            );
         } else if (scrollDelta < 0f) {
             if (!_dirtyFov) {
                 _dirtyFov = true;
                 _preChangeFov = _camera.fieldOfView;
             }
-            _targetFov = Mathf.Clamp(_camera.fieldOfView + ZoomSensitivity, 1f, 179f);
+            _targetFovSize = Mathf.Clamp(
+                _targetFovSize * (1f + ZoomSensitivity), 
+                FovToSize(0f, _snapToBounds.PerspectiveCenterDistance), 
+                FovToSize(179f, _snapToBounds.PerspectiveCenterDistance)
+            );
         }
         
         if(Input.GetKeyDown(KeyCode.R)) ResetCamera();
 
         _camTransform.position = Vector3.Lerp(_camTransform.position, _targetPosition, Time.deltaTime * InteroplationFactor);
         _camTransform.rotation = Quaternion.Lerp(_camTransform.rotation, _targetRotation, Time.deltaTime * InteroplationFactor);
-        _camera.fieldOfView = Mathf.Lerp(_camera.fieldOfView, _targetFov, Time.deltaTime * InteroplationFactor);
+        //_camera.fieldOfView = Mathf.Lerp(_camera.fieldOfView, _targetFov, Time.deltaTime * InteroplationFactor);
+        _fovSize = Mathf.Lerp(_fovSize, _targetFovSize, Time.deltaTime * InteroplationFactor);
+        _camera.fieldOfView = SizeToFov(_fovSize, _snapToBounds.PerspectiveCenterDistance);
     }
 
     private void UpdateCameraPosition()
@@ -106,7 +118,7 @@ public class CameraControl : MonoBehaviour
         _targetPosition += _camTransform.TransformVector(_cameraOffset);
     }
 
-    public void ResetCamera()
+    public void ResetCamera(bool hard = false)
     {
         _targetPosition = Vector3.zero;
         _targetRotation = Quaternion.identity;
@@ -115,8 +127,27 @@ public class CameraControl : MonoBehaviour
         _cameraOffset = Vector3.zero;
         
         if (_dirtyFov) {
-            _targetFov = _preChangeFov;
+            _targetFovSize = FovToSize(_preChangeFov, _snapToBounds.PerspectiveCenterDistance);
             _dirtyFov = false;
         }
+
+        if (hard) {
+            _camTransform.position = _targetPosition;
+            _camTransform.rotation = _targetRotation;
+            _fovSize = _targetFovSize;
+            _camera.fieldOfView = SizeToFov(_fovSize, _snapToBounds.PerspectiveCenterDistance);
+        }
+    }
+
+    private static float FovToSize(float fieldOfView, float distance)
+    {
+        while (fieldOfView > 180f) fieldOfView -= 180f;
+        
+        return 2f * distance * Mathf.Tan(fieldOfView * 0.5f * Mathf.Deg2Rad);
+    }
+
+    private static float SizeToFov(float size, float distance)
+    {
+        return 2f * Mathf.Atan(size / (2f * distance)) * Mathf.Rad2Deg;
     }
 }
