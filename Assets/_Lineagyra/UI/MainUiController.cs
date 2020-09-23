@@ -12,6 +12,20 @@ public class MainUiController : MonoBehaviour
     private Button[] _navButtons;
     private GameObject[] _pages;
     private GameObject _mainPanel;
+    
+    private Slider _fovSlider;
+
+    private Dropdown _targetParameterDropdown;
+    private Dropdown _shapeDropdown;
+    private Slider _centerSlider;
+    private InputField _centerInput;
+    private Slider _amplitudeSlider;
+    private InputField _amplitudeInput;
+    private Slider _periodSlider;
+    private InputField _periodInput;
+    private Slider _phaseSlider;
+    private InputField _phaseInput;
+    private Text _warningText;
 
     private Camera _camera;
     private LineCircle _lineCircle;
@@ -20,6 +34,8 @@ public class MainUiController : MonoBehaviour
     private SnapToBounds _snapToBounds;
     private PatternOverrides _patternOverrides;
     private PostProcessProfile _post;
+    private CameraControl _cameraControl;
+    private LineCirclePauser _pauser;
 
     private bool _menuVisible;
     
@@ -32,14 +48,19 @@ public class MainUiController : MonoBehaviour
         _snapToBounds = FindObjectOfType<SnapToBounds>();
         _patternOverrides = FindObjectOfType<PatternOverrides>();
         _post = FindObjectOfType<PostProcessVolume>().profile;
+        _cameraControl = FindObjectOfType<CameraControl>();
+        _pauser = FindObjectOfType<LineCirclePauser>();
 
         _mainPanel = transform.Find("Container").gameObject;
         
         var mainPanelTransform = _mainPanel.transform;
         SetupContainerControls(mainPanelTransform);
-        SetupCameraControls(mainPanelTransform);
-        SetupPatternControls(mainPanelTransform);
-        SetupGeneratorControls(mainPanelTransform);
+        SetupCameraControls();
+        SetupPatternControls();
+        SetupGeneratorControls();
+        SetupAdvancedControls();
+
+        _lineCircle.OnPatternChanged += HandlePatternChanged;
 
         NavigateToPage(0);
         SetMenu(false);
@@ -70,14 +91,14 @@ public class MainUiController : MonoBehaviour
     }
 
 
-    private void SetupCameraControls(Transform container)
+    private void SetupCameraControls()
     {
         var panel = _pages[0].transform;
         
         //Field of View
-        var fovSlider = panel.Find("FieldOfView/Slider").GetComponent<Slider>();
-        fovSlider.value = _camera.fieldOfView;
-        fovSlider.onValueChanged.AddListener((newValue => _camera.fieldOfView = newValue));
+        _fovSlider = panel.Find("FieldOfView/Slider").GetComponent<Slider>();
+        _fovSlider.value = _camera.fieldOfView;
+        _fovSlider.onValueChanged.AddListener((newValue => _camera.fieldOfView = newValue));
         
         //Bloom Toggle
         var bloomToggle = panel.Find("Bloom/Toggle").GetComponent<Toggle>();
@@ -108,14 +129,9 @@ public class MainUiController : MonoBehaviour
             _post.TryGetSettings(out Bloom bloomF);
             bloomF.threshold.value = newValue;
         });
-        
-        //Pattern Size
-        var patternSize = panel.Find("Zoom/Slider").GetComponent<Slider>();
-        patternSize.value = _snapToBounds.SizeMultiplier;
-        patternSize.onValueChanged.AddListener(newValue => _snapToBounds.SizeMultiplier = newValue);
     }
 
-    private void SetupPatternControls(Transform container)
+    private void SetupPatternControls()
     {
         var panel = _pages[1].transform;
         
@@ -155,7 +171,7 @@ public class MainUiController : MonoBehaviour
         autoScaleLines.onValueChanged.AddListener(newValue => _patternOverrides.AutoScaleLines = newValue);
     }
 
-    private void SetupGeneratorControls(Transform container)
+    private void SetupGeneratorControls()
     {
         var panel = _pages[2].transform;
         
@@ -167,12 +183,20 @@ public class MainUiController : MonoBehaviour
         //Oscillate Timespan
         var oscillateTimespan = panel.Find("OscillateTimespan/Toggle").GetComponent<Toggle>();
         oscillateTimespan.isOn = _timeStepper.OscillateTimespan;
-        oscillateTimespan.onValueChanged.AddListener(newValue => _timeStepper.OscillateTimespan = newValue);   
+        oscillateTimespan.onValueChanged.AddListener(newValue =>
+        {
+            _timeStepper.OscillateTimespan = newValue;
+            _pauser.SetDefaultOscillateTimespan(newValue);
+        });   
         
-        //3D Mode
+        //Auto Shuffle
         var autoShuffle= panel.Find("AutoShuffle/Toggle").GetComponent<Toggle>();
         autoShuffle.isOn = _shuffler.DoAutoShuffle;
-        autoShuffle.onValueChanged.AddListener(newValue => _shuffler.DoAutoShuffle = newValue);   
+        autoShuffle.onValueChanged.AddListener(newValue =>
+        {
+            _shuffler.DoAutoShuffle = newValue;
+            _pauser.SetDefaultAutoShuffle(newValue);
+        });   
         
         //Auto Shuffle Period
         var autoShufflePeriod = panel.Find("AutoShufflePeriod/Slider").GetComponent<Slider>();
@@ -192,23 +216,114 @@ public class MainUiController : MonoBehaviour
         var nextPattern = panel.Find("PatternNavigation/NextPattern").GetComponent<Button>();
         nextPattern.onClick.AddListener(() => _shuffler.NextPattern());
     }
-    
-    /* TODO:
-    private void SetupAdvancedControls(VisualElement body)
+
+    private void SetupAdvancedControls()
     {
-    
+        var panel = _pages[3].transform;
+
+        _targetParameterDropdown = panel.Find("TargetParameter/Dropdown").GetComponent<Dropdown>();
+        _targetParameterDropdown.value = 0;
+        _targetParameterDropdown.onValueChanged.AddListener(SetOscillatorControls);
+
+        _shapeDropdown = panel.Find("OscillatorShape/Dropdown").GetComponent<Dropdown>();
+        _shapeDropdown.onValueChanged.AddListener(newValue => _lineCircle.Pattern.Oscillators[_targetParameterDropdown.value].Type = (OscillatorShape)newValue);
+        
+        _centerSlider = panel.Find("Center/Slider").GetComponent<Slider>();
+        _centerInput = panel.Find("Center/InputField").GetComponent<InputField>();
+        _centerSlider.onValueChanged.AddListener(newValue => {
+            _lineCircle.Pattern.Oscillators[_targetParameterDropdown.value].Center = newValue;
+            _centerInput.text = newValue.ToString("0.00");
+        });
+        _centerInput.onValueChanged.AddListener(newRawValue => {
+            if(!float.TryParse(newRawValue, out var newValue)) return;
+            _lineCircle.Pattern.Oscillators[_targetParameterDropdown.value].Center = newValue;
+            _centerSlider.value = newValue;
+        });
+        
+        _amplitudeSlider = panel.Find("Amplitude/Slider").GetComponent<Slider>();
+        _amplitudeInput = panel.Find("Amplitude/InputField").GetComponent<InputField>();
+        _amplitudeSlider.onValueChanged.AddListener(newValue => {
+            _lineCircle.Pattern.Oscillators[_targetParameterDropdown.value].Amplitude = newValue;
+            _amplitudeInput.text = newValue.ToString("0.00");
+        });
+        _amplitudeInput.onValueChanged.AddListener(newRawValue => {
+            if(!float.TryParse(newRawValue, out var newValue)) return;
+            _lineCircle.Pattern.Oscillators[_targetParameterDropdown.value].Amplitude = newValue;
+            _amplitudeSlider.value = newValue;
+        });
+        
+        _periodSlider = panel.Find("Period/Slider").GetComponent<Slider>();
+        _periodInput = panel.Find("Period/InputField").GetComponent<InputField>();
+        _periodSlider.onValueChanged.AddListener(newValue => {
+            _lineCircle.Pattern.Oscillators[_targetParameterDropdown.value].Period = newValue;
+            _periodInput.text = newValue.ToString("0.00");
+        });
+        _periodInput.onValueChanged.AddListener(newRawValue => {
+            if(!float.TryParse(newRawValue, out var newValue)) return;
+            _lineCircle.Pattern.Oscillators[_targetParameterDropdown.value].Period = newValue;
+            _periodSlider.value = newValue;
+        });
+        
+        _phaseSlider = panel.Find("Phase/Slider").GetComponent<Slider>();
+        _phaseInput = panel.Find("Phase/InputField").GetComponent<InputField>();
+        _phaseSlider.onValueChanged.AddListener(newValue => {
+            _lineCircle.Pattern.Oscillators[_targetParameterDropdown.value].Phase = newValue;
+            _phaseInput.text = newValue.ToString("0.00");
+        });
+        _phaseInput.onValueChanged.AddListener(newRawValue => {
+            if(!float.TryParse(newRawValue, out var newValue)) return;
+            _lineCircle.Pattern.Oscillators[_targetParameterDropdown.value].Phase = newValue;
+            _phaseSlider.value = newValue;
+        });
+
+        _warningText = panel.Find("Warning/Text").GetComponent<Text>();
+        
+        SetOscillatorControls(_targetParameterDropdown.value);
     }
-    */
+
+    private void SetOscillatorControls(int value)
+    {
+        var oscillator = _lineCircle.Pattern.Oscillators[value];
+        
+        _shapeDropdown.value = (int)oscillator.Type;
+
+        _centerSlider.value = oscillator.Center;
+        _centerInput.text = oscillator.Center.ToString("0.00");
+
+        _amplitudeSlider.value = oscillator.Amplitude;
+        _amplitudeInput.text = oscillator.Amplitude.ToString("0.00");
+        
+        _periodSlider.value = oscillator.Period;
+        _periodInput.text = oscillator.Period.ToString("0.00");
+        
+        _phaseSlider.value = oscillator.Phase;
+        _phaseInput.text = oscillator.Phase.ToString("0.00");
+    }
 
     private void Update()
     {
         if(Input.GetKeyDown(KeyCode.Escape)) SetMenu(!_menuVisible);
+
+        if (_menuVisible && _pages[3].activeSelf) {
+            if (_shuffler.DoAutoShuffle) {
+                _warningText.text = $"Warning - Auto Shuffle will discard any changes made in this panel. " +
+                                    $"Turn Auto Shuffle off to keep any changes made\n" +
+                                    $"Next Auto Shuffle will occur in {(_shuffler.AutoShufflePeriod * (1f - _shuffler.CurrentAutoShuffleTime)):0} seconds";
+            } else _warningText.text = "";
+        }
     }
     
     private void SetMenu(bool visible)
     {
         _mainPanel.SetActive(visible);
         _menuVisible = visible;
+
+        if (_menuVisible) {
+            _fovSlider.value = _camera.fieldOfView;
+            SetOscillatorControls(_targetParameterDropdown.value);
+        }
+
+        _cameraControl.enabled = !_menuVisible;
     }
 
     private void NavigateToPage(int page)
@@ -220,5 +335,10 @@ public class MainUiController : MonoBehaviour
         for (var i = 0; i < _pages.Length; i++) {
             _pages[i].SetActive(i == page);
         }
+    }
+    
+    private void HandlePatternChanged(object sender, EventArgs e)
+    {
+        SetOscillatorControls(_targetParameterDropdown.value);
     }
 }
