@@ -1,6 +1,32 @@
 # Lineagyra Changelog
 
-#### Last Update by Lachlan Sleight on 19/09/2020
+#### Last Update by Lachlan Sleight on 23/09/2020
+
+---
+
+## Version 0.2.0
+
+### Notes
+
+Features new camera controls, advanced UI, and a few bugfixes and improvements
+
+### Added
+
+  * The camera can now be controlled with the mouse. Middle mouse click and drag to pan, mousewheel to scroll and right mouse click and drag to orbit (in 3D mode)
+  * Advanced Controls allow the current pattern to be controlled with a great deal of granularity
+  * AutoScaleLines UI control now controls the pattern line auto scale property
+  * LineDensity now controls how dense the pattern lines are
+  * Pattern animation and shuffling can be paused and unpaused using the space bar
+  * App version now appears below the UI title
+
+### Removed
+
+  * Removed Pattern zoom slider, as its functionality was replicated by camera zoom
+
+### Fixed
+
+  * Fixed a bug where the pattern was shuffling even when Auto Shuffle was turned off
+  * Fixed a few small UI layout bugs and issues
 
 ---
 
