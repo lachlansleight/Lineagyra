@@ -22,6 +22,7 @@ public class MainUiController : MonoBehaviour
     private PatternOverrides _patternOverrides;
     private PostProcessProfile _post;
     private CameraControl _cameraControl;
+    private LineCirclePauser _pauser;
 
     private bool _menuVisible;
     
@@ -35,6 +36,7 @@ public class MainUiController : MonoBehaviour
         _patternOverrides = FindObjectOfType<PatternOverrides>();
         _post = FindObjectOfType<PostProcessVolume>().profile;
         _cameraControl = FindObjectOfType<CameraControl>();
+        _pauser = FindObjectOfType<LineCirclePauser>();
 
         _mainPanel = transform.Find("Container").gameObject;
         
@@ -165,12 +167,20 @@ public class MainUiController : MonoBehaviour
         //Oscillate Timespan
         var oscillateTimespan = panel.Find("OscillateTimespan/Toggle").GetComponent<Toggle>();
         oscillateTimespan.isOn = _timeStepper.OscillateTimespan;
-        oscillateTimespan.onValueChanged.AddListener(newValue => _timeStepper.OscillateTimespan = newValue);   
+        oscillateTimespan.onValueChanged.AddListener(newValue =>
+        {
+            _timeStepper.OscillateTimespan = newValue;
+            _pauser.SetDefaultOscillateTimespan(newValue);
+        });   
         
-        //3D Mode
+        //Auto Shuffle
         var autoShuffle= panel.Find("AutoShuffle/Toggle").GetComponent<Toggle>();
         autoShuffle.isOn = _shuffler.DoAutoShuffle;
-        autoShuffle.onValueChanged.AddListener(newValue => _shuffler.DoAutoShuffle = newValue);   
+        autoShuffle.onValueChanged.AddListener(newValue =>
+        {
+            _shuffler.DoAutoShuffle = newValue;
+            _pauser.SetDefaultAutoShuffle(newValue);
+        });   
         
         //Auto Shuffle Period
         var autoShufflePeriod = panel.Find("AutoShufflePeriod/Slider").GetComponent<Slider>();
