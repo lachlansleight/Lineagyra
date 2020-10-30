@@ -107,7 +107,7 @@ public class MainUiController : MonoBehaviour
         //Field of View
         _fovSlider = panel.Find("FieldOfView/Slider").GetComponent<Slider>();
         _fovSlider.value = _camera.fieldOfView;
-        _fovSlider.onValueChanged.AddListener((newValue => _camera.fieldOfView = newValue));
+        _fovSlider.onValueChanged.AddListener(newValue => _cameraControl.SetTargetSize(newValue));
         
         //Bloom Toggle
         var bloomToggle = panel.Find("Bloom/Toggle").GetComponent<Toggle>();
@@ -361,6 +361,10 @@ public class MainUiController : MonoBehaviour
                                     $"Turn Auto Shuffle off to keep any changes made\n" +
                                     $"Next Auto Shuffle will occur in {(_shuffler.AutoShufflePeriod * (1f - _shuffler.CurrentAutoShuffleTime)):0} seconds";
             } else _warningText.text = "";
+        }
+
+        if (_menuVisible && _pages[0].activeSelf) {
+            _fovSlider.value = _cameraControl.GetTargetFov();
         }
     }
     
