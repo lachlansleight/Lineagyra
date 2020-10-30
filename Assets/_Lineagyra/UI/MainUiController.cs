@@ -236,7 +236,13 @@ public class MainUiController : MonoBehaviour
 
         _shapeDropdownParent = panel.Find("OscillatorShape").gameObject;
         _shapeDropdown = panel.Find("OscillatorShape/Dropdown").GetComponent<Dropdown>();
-        _shapeDropdown.onValueChanged.AddListener(newValue => _lineCircle.Pattern.Oscillators[_targetParameterDropdown.value - 1].Type = (OscillatorShape)newValue);
+        _shapeDropdown.onValueChanged.AddListener(newValue =>
+        {
+            _lineCircle.Pattern.Oscillators[_targetParameterDropdown.value - 1].Type = (OscillatorShape) newValue;
+            _amplitudeSliderParent.SetActive(newValue != 0);
+            _periodSliderParent.SetActive(newValue != 0);
+            _phaseSliderParent.SetActive(newValue != 0);
+        });
         
         _centerSliderParent = panel.Find("Center").gameObject;
         _centerSlider = panel.Find("Center/Slider").GetComponent<Slider>();
