@@ -139,14 +139,26 @@ public class CameraControl : MonoBehaviour
         }
     }
 
-    private static float FovToSize(float fieldOfView, float distance)
+    public void SetTargetSize(float fieldOfView)
+    {
+        _dirtyFov = true;
+        _preChangeFov = _camera.fieldOfView;
+        _targetFovSize = FovToSize(fieldOfView, _snapToBounds.PerspectiveCenterDistance);
+    }
+
+    public float GetTargetFov()
+    {
+        return SizeToFov(_targetFovSize, _snapToBounds.PerspectiveCenterDistance);
+    }
+
+    public static float FovToSize(float fieldOfView, float distance)
     {
         while (fieldOfView > 180f) fieldOfView -= 180f;
         
         return 2f * distance * Mathf.Tan(fieldOfView * 0.5f * Mathf.Deg2Rad);
     }
 
-    private static float SizeToFov(float size, float distance)
+    public static float SizeToFov(float size, float distance)
     {
         return 2f * Mathf.Atan(size / (2f * distance)) * Mathf.Rad2Deg;
     }

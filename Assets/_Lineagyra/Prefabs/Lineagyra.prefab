@@ -202,6 +202,10 @@ PrefabInstance:
       propertyPath: StepOffset
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 4172176624687356334, guid: 0bd5dd2efd9e92e4ba3eafeb40f5cfc4, type: 3}
+      propertyPath: Pattern.TimeStep
+      value: 0.01
+      objectReference: {fileID: 0}
     - target: {fileID: 4172176624687356335, guid: 0bd5dd2efd9e92e4ba3eafeb40f5cfc4, type: 3}
       propertyPath: m_Enabled
       value: 1
