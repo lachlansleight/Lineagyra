@@ -16,15 +16,24 @@ public class MainUiController : MonoBehaviour
     private Slider _fovSlider;
 
     private Dropdown _targetParameterDropdown;
+    public GameObject _shapeDropdownParent;
     private Dropdown _shapeDropdown;
+    public GameObject _centerSliderParent;
     private Slider _centerSlider;
     private InputField _centerInput;
+    public GameObject _amplitudeSliderParent;
     private Slider _amplitudeSlider;
     private InputField _amplitudeInput;
+    public GameObject _periodSliderParent;
     private Slider _periodSlider;
     private InputField _periodInput;
+    public GameObject _phaseSliderParent;
     private Slider _phaseSlider;
     private InputField _phaseInput;
+    public GameObject _lineCountSliderParent;
+    public Slider _lineCountSlider;
+    public GameObject _sphericalToggleParent;
+    public Toggle _sphericalToggle;
     private Text _warningText;
 
     private Camera _camera;
@@ -223,66 +232,102 @@ public class MainUiController : MonoBehaviour
 
         _targetParameterDropdown = panel.Find("TargetParameter/Dropdown").GetComponent<Dropdown>();
         _targetParameterDropdown.value = 0;
-        _targetParameterDropdown.onValueChanged.AddListener(SetOscillatorControls);
+        _targetParameterDropdown.onValueChanged.AddListener(HandleNewTargetParameter);
 
+        _shapeDropdownParent = panel.Find("OscillatorShape").gameObject;
         _shapeDropdown = panel.Find("OscillatorShape/Dropdown").GetComponent<Dropdown>();
-        _shapeDropdown.onValueChanged.AddListener(newValue => _lineCircle.Pattern.Oscillators[_targetParameterDropdown.value].Type = (OscillatorShape)newValue);
+        _shapeDropdown.onValueChanged.AddListener(newValue => _lineCircle.Pattern.Oscillators[_targetParameterDropdown.value - 1].Type = (OscillatorShape)newValue);
         
+        _centerSliderParent = panel.Find("Center").gameObject;
         _centerSlider = panel.Find("Center/Slider").GetComponent<Slider>();
         _centerInput = panel.Find("Center/InputField").GetComponent<InputField>();
         _centerSlider.onValueChanged.AddListener(newValue => {
-            _lineCircle.Pattern.Oscillators[_targetParameterDropdown.value].Center = newValue;
+            _lineCircle.Pattern.Oscillators[_targetParameterDropdown.value - 1].Center = newValue;
             _centerInput.text = newValue.ToString("0.00");
         });
         _centerInput.onValueChanged.AddListener(newRawValue => {
             if(!float.TryParse(newRawValue, out var newValue)) return;
-            _lineCircle.Pattern.Oscillators[_targetParameterDropdown.value].Center = newValue;
+            _lineCircle.Pattern.Oscillators[_targetParameterDropdown.value - 1].Center = newValue;
             _centerSlider.value = newValue;
         });
         
+        _amplitudeSliderParent = panel.Find("Amplitude").gameObject;
         _amplitudeSlider = panel.Find("Amplitude/Slider").GetComponent<Slider>();
         _amplitudeInput = panel.Find("Amplitude/InputField").GetComponent<InputField>();
         _amplitudeSlider.onValueChanged.AddListener(newValue => {
-            _lineCircle.Pattern.Oscillators[_targetParameterDropdown.value].Amplitude = newValue;
+            _lineCircle.Pattern.Oscillators[_targetParameterDropdown.value - 1].Amplitude = newValue;
             _amplitudeInput.text = newValue.ToString("0.00");
         });
         _amplitudeInput.onValueChanged.AddListener(newRawValue => {
             if(!float.TryParse(newRawValue, out var newValue)) return;
-            _lineCircle.Pattern.Oscillators[_targetParameterDropdown.value].Amplitude = newValue;
+            _lineCircle.Pattern.Oscillators[_targetParameterDropdown.value - 1].Amplitude = newValue;
             _amplitudeSlider.value = newValue;
         });
         
+        _periodSliderParent = panel.Find("Period").gameObject;
         _periodSlider = panel.Find("Period/Slider").GetComponent<Slider>();
         _periodInput = panel.Find("Period/InputField").GetComponent<InputField>();
         _periodSlider.onValueChanged.AddListener(newValue => {
-            _lineCircle.Pattern.Oscillators[_targetParameterDropdown.value].Period = newValue;
+            _lineCircle.Pattern.Oscillators[_targetParameterDropdown.value - 1].Period = newValue;
             _periodInput.text = newValue.ToString("0.00");
         });
         _periodInput.onValueChanged.AddListener(newRawValue => {
             if(!float.TryParse(newRawValue, out var newValue)) return;
-            _lineCircle.Pattern.Oscillators[_targetParameterDropdown.value].Period = newValue;
+            _lineCircle.Pattern.Oscillators[_targetParameterDropdown.value - 1].Period = newValue;
             _periodSlider.value = newValue;
         });
         
+        _phaseSliderParent = panel.Find("Phase").gameObject;
         _phaseSlider = panel.Find("Phase/Slider").GetComponent<Slider>();
         _phaseInput = panel.Find("Phase/InputField").GetComponent<InputField>();
         _phaseSlider.onValueChanged.AddListener(newValue => {
-            _lineCircle.Pattern.Oscillators[_targetParameterDropdown.value].Phase = newValue;
+            _lineCircle.Pattern.Oscillators[_targetParameterDropdown.value - 1].Phase = newValue;
             _phaseInput.text = newValue.ToString("0.00");
         });
         _phaseInput.onValueChanged.AddListener(newRawValue => {
             if(!float.TryParse(newRawValue, out var newValue)) return;
-            _lineCircle.Pattern.Oscillators[_targetParameterDropdown.value].Phase = newValue;
+            _lineCircle.Pattern.Oscillators[_targetParameterDropdown.value - 1].Phase = newValue;
             _phaseSlider.value = newValue;
         });
+        
+        _lineCountSliderParent = panel.Find("LineCount").gameObject;
+        _lineCountSlider = panel.Find("LineCount/Slider").GetComponent<Slider>();
+        _lineCountSlider.onValueChanged.AddListener(newValue => {
+            _lineCircle.Pattern.LineCount = Mathf.RoundToInt(newValue);
+        });
+
+        _sphericalToggleParent = panel.Find("Spherical").gameObject;
+        _sphericalToggle = panel.Find("Spherical/Toggle").GetComponent<Toggle>();
+        _sphericalToggle.onValueChanged.AddListener(newValue =>
+        {
+            _lineCircle.Pattern.SphericalCoordinates = newValue;
+        });
+
 
         _warningText = panel.Find("Warning/Text").GetComponent<Text>();
-        
-        SetOscillatorControls(_targetParameterDropdown.value);
+
+        HandleNewTargetParameter(_targetParameterDropdown.value);
     }
 
-    private void SetOscillatorControls(int value)
+    private void HandleNewTargetParameter(int value)
     {
+        _lineCountSliderParent.SetActive(value == 0);
+        _sphericalToggleParent.SetActive(value == 0);
+        
+        _shapeDropdownParent.SetActive(value != 0);
+        _centerSliderParent.SetActive(value != 0);
+        _amplitudeSliderParent.SetActive(value != 0);
+        _periodSliderParent.SetActive(value != 0);
+        _phaseSliderParent.SetActive(value != 0);
+        
+        //special case - show the global pattern settings
+        if (value == 0) {
+            _lineCountSlider.value = _lineCircle.Pattern.LineCount;
+            _sphericalToggle.isOn = _lineCircle.Pattern.SphericalCoordinates;
+            return;
+        }
+
+        value--;
         var oscillator = _lineCircle.Pattern.Oscillators[value];
         
         _shapeDropdown.value = (int)oscillator.Type;
@@ -320,10 +365,10 @@ public class MainUiController : MonoBehaviour
 
         if (_menuVisible) {
             _fovSlider.value = _camera.fieldOfView;
-            SetOscillatorControls(_targetParameterDropdown.value);
+            HandleNewTargetParameter(_targetParameterDropdown.value);
         }
 
-        _cameraControl.enabled = !_menuVisible;
+        //_cameraControl.enabled = !_menuVisible;
     }
 
     private void NavigateToPage(int page)
@@ -339,6 +384,6 @@ public class MainUiController : MonoBehaviour
     
     private void HandlePatternChanged(object sender, EventArgs e)
     {
-        SetOscillatorControls(_targetParameterDropdown.value);
+        HandleNewTargetParameter(_targetParameterDropdown.value);
     }
 }
