@@ -1,6 +1,29 @@
-# Lineagyra Changelog
+# Linea Gyra Changelog
 
 #### Last Update by Lachlan Sleight on 23/09/2020
+
+---
+
+## Version 0.3.0
+
+### Notes
+
+Just some minor improvements to 0.2.0, mostly focused on the UI and camera controls
+
+### Added
+
+  * Added a new 'general settings' option in the Advanced menu, which allows changing the current pattern's LineCount, and whether is uses spherical or cartesian coordinates
+
+### Changed
+
+  * The app is now called Linea Gyra!
+  * Reduced opacity of main menu, and moved it to the left of the screen
+  * Made it so that the camera can still be controlled while the main menu is open
+  * For clarity, made it so that when an oscillator is in Constant mode, the Amplitude, Period and Phase sliders are invisible
+
+### Fixed
+
+  * Fixed a bug where the labels for ColorRange and ColorOffset target parameters were switched around in 0.2.0
 
 ---
 
