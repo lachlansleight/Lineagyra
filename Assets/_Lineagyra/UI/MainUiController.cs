@@ -107,7 +107,7 @@ public class MainUiController : MonoBehaviour
         //Field of View
         _fovSlider = panel.Find("FieldOfView/Slider").GetComponent<Slider>();
         _fovSlider.value = _camera.fieldOfView;
-        _fovSlider.onValueChanged.AddListener(newValue => _cameraControl.SetTargetSize(newValue));
+        _fovSlider.onValueChanged.AddListener(newValue => _cameraControl?.SetTargetSize(newValue));
         
         //Bloom Toggle
         var bloomToggle = panel.Find("Bloom/Toggle").GetComponent<Toggle>();
@@ -364,7 +364,7 @@ public class MainUiController : MonoBehaviour
         }
 
         if (_menuVisible && _pages[0].activeSelf) {
-            _fovSlider.value = _cameraControl.GetTargetFov();
+            _fovSlider.value = _cameraControl ? _cameraControl.GetTargetFov() : 0f;
         }
     }
     
