@@ -35,8 +35,7 @@ public class PlayerGrabAndThrow : MonoBehaviour
                 _parentStartPosition = _player.transform.position;
             }
 
-            var offset = worldSpacePos - _startPosition;
-            offset.y *= -1f;
+            var offset = _startPosition - worldSpacePos;
             _player.transform.position = _parentStartPosition + offset;
             
             _parentStartPosition += _velocity * Time.deltaTime;
@@ -46,8 +45,7 @@ public class PlayerGrabAndThrow : MonoBehaviour
         } else if (_lastGrab) {
             var worldSpaceVel = PoseAction.GetVelocity(Source);
             if (worldSpaceVel.magnitude > ThresholdVelocity) {
-                _velocity = worldSpaceVel;
-                _velocity.y *= -1f;
+                _velocity = -worldSpaceVel;
             }
 
             _lastGrab = false;
