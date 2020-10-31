@@ -38,7 +38,7 @@ public class UiGrab : MonoBehaviour
             _targetPosition = _player.transform.TransformPoint(PoseAction.GetLocalPosition(Source)) + Offset;
         }
         
-        if (ToggleMenu.GetStateDown(SteamVR_Input_Sources.Any)) {
+        if (ToggleMenu.GetStateDown(SteamVR_Input_Sources.Any) && !WelcomeUiController.WelcomeShowing) {
             _mainUi.ToggleMenu();
             _targetPosition = _player.transform.TransformPoint(PoseAction.GetLocalPosition(Source)) + Offset;
             transform.position = _targetPosition;
