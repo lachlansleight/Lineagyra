@@ -4,6 +4,27 @@
 
 ---
 
+## Version 0.3.0-vr
+
+### Notes
+
+This is version 0.3.0 (more or less), only in VR
+
+### Added
+
+  * Added VR support, obviously!
+  * Added a welcome screen to explain the controls for those who can't check out the readme
+  * Added basic 6DOF locomotion
+  * Made the UI movable in 3D space
+  * Added some particles to the environment
+  * Added a looping audio track
+
+### Changed
+
+  * The Line and Fill Opacity sliders had their range changed to 0% - 25% (from 0% - 100%)
+
+---
+
 ## Version 0.3.0
 
 ### Notes
