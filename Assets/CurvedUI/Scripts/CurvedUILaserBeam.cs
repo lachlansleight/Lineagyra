@@ -31,6 +31,7 @@ namespace CurvedUI
             if(LaserBeamTransform && LaserBeamDot) {
                 //change the laser's length depending on where it hits
                 float length = 10000;
+                float width = 0.005f;
                 
                 RaycastHit hit;
                 if (Physics.Raycast(myRay, out hit, length, CurvedUIInputModule.Instance.RaycastLayerMask))
@@ -46,13 +47,19 @@ namespace CurvedUI
 
                         length = selectablesUnderPointer == 0 ? 10000 : Vector3.Distance(hit.point, this.transform.position);
                     }
-                    else if (hideWhenNotAimingAtCanvas) length = 0;
+                    else if (hideWhenNotAimingAtCanvas) {
+                        length = 0f;
+                        width = 0f;
+                    }
                 }
-                else if (hideWhenNotAimingAtCanvas) length = 0;
+                else if (hideWhenNotAimingAtCanvas) {
+                    length = 0f;
+                    width = 0f;
+                }
 
 
                 //set the leangth of the beam
-                LaserBeamTransform.localScale = LaserBeamTransform.localScale.ModifyZ(length);
+                LaserBeamTransform.localScale = new Vector3(width, width, length);
             }
            
 
