@@ -25,7 +25,7 @@ public class WelcomeUiController : MonoBehaviour
     private void Update()
     {
         if (ToggleMenu.GetStateDown(SteamVR_Input_Sources.Any)) {
-            WelcomeShowing = false;
+            Invoke(nameof(SetWelcomeShowingFalse), 0.5f);
             gameObject.SetActive(false);
         }
         
@@ -42,5 +42,10 @@ public class WelcomeUiController : MonoBehaviour
         var offset = zeroPosY - camZeroPosY;
         offset.y = 0f;
         transform.rotation = Quaternion.LookRotation(offset, Vector3.up);
+    }
+
+    private void SetWelcomeShowingFalse()
+    {
+        WelcomeShowing = false;
     }
 }
