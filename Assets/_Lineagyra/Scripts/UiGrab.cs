@@ -6,7 +6,7 @@ using Valve.VR.InteractionSystem;
 
 public class UiGrab : MonoBehaviour
 {
-    public SteamVR_Action_Boolean GrabAction;
+    public SteamVR_Action_Single GrabAction;
     public SteamVR_Action_Pose PoseAction;
     public SteamVR_Input_Sources Source;
 
@@ -34,7 +34,7 @@ public class UiGrab : MonoBehaviour
     // Update is called once per frame
     private void Update()
     {
-        if (GrabAction.GetState(Source)) {
+        if (GrabAction.GetAxis(Source) > 0.2f) {
             _targetPosition = _player.transform.TransformPoint(PoseAction.GetLocalPosition(Source)) + Offset;
         }
         

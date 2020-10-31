@@ -6,11 +6,6 @@
       "requirement": "mandatory"
     },
     {
-      "name": "/actions/default/in/GrabGrip",
-      "type": "boolean",
-      "requirement": "mandatory"
-    },
-    {
       "name": "/actions/default/in/Pose",
       "type": "pose"
     },
@@ -32,6 +27,11 @@
     {
       "name": "/actions/default/in/Menu",
       "type": "boolean",
+      "requirement": "mandatory"
+    },
+    {
+      "name": "/actions/default/in/Grab",
+      "type": "vector1",
       "requirement": "mandatory"
     },
     {
@@ -102,7 +102,6 @@
   "localization": [
     {
       "language_tag": "en_US",
-      "/actions/default/in/GrabGrip": "Grab Grip",
       "/actions/default/in/HeadsetOnHead": "Headset on head (proximity sensor)",
       "/actions/default/in/InteractUI": "Interact With UI",
       "/actions/default/in/Pose": "Pose",
