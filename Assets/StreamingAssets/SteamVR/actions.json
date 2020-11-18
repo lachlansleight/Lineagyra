@@ -1,47 +1,47 @@
 {
   "actions": [
     {
-      "name": "/actions/default/in/InteractUI",
+      "name": "/actions/LineaGyra/in/InteractUI",
       "type": "boolean",
       "requirement": "mandatory"
     },
     {
-      "name": "/actions/default/in/Pose",
+      "name": "/actions/LineaGyra/in/Pose",
       "type": "pose"
     },
     {
-      "name": "/actions/default/in/SkeletonLeftHand",
+      "name": "/actions/LineaGyra/in/SkeletonLeftHand",
       "type": "skeleton",
       "skeleton": "/skeleton/hand/left"
     },
     {
-      "name": "/actions/default/in/SkeletonRightHand",
+      "name": "/actions/LineaGyra/in/SkeletonRightHand",
       "type": "skeleton",
       "skeleton": "/skeleton/hand/right"
     },
     {
-      "name": "/actions/default/in/HeadsetOnHead",
+      "name": "/actions/LineaGyra/in/HeadsetOnHead",
       "type": "boolean",
       "requirement": "optional"
     },
     {
-      "name": "/actions/default/in/Menu",
+      "name": "/actions/LineaGyra/in/Menu",
       "type": "boolean",
       "requirement": "mandatory"
     },
     {
-      "name": "/actions/default/in/Grab",
+      "name": "/actions/LineaGyra/in/Grab",
       "type": "vector1",
       "requirement": "mandatory"
     },
     {
-      "name": "/actions/default/out/Haptic",
+      "name": "/actions/LineaGyra/out/Haptic",
       "type": "vibration"
     }
   ],
   "action_sets": [
     {
-      "name": "/actions/default",
+      "name": "/actions/LineaGyra",
       "usage": "single"
     }
   ],
@@ -101,13 +101,7 @@
   ],
   "localization": [
     {
-      "language_tag": "en_US",
-      "/actions/default/in/HeadsetOnHead": "Headset on head (proximity sensor)",
-      "/actions/default/in/InteractUI": "Interact With UI",
-      "/actions/default/in/Pose": "Pose",
-      "/actions/default/in/SkeletonLeftHand": "Skeleton (Left)",
-      "/actions/default/in/SkeletonRightHand": "Skeleton (Right)",
-      "/actions/default/out/Haptic": "Haptic"
+      "language_tag": "en_US"
     }
   ]
 }

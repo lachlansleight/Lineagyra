@@ -1,6 +1,18 @@
 # Linea Gyra Changelog
 
-#### Last Update by Lachlan Sleight on 23/09/2020
+#### Last Update by Lachlan Sleight on 18/11/2020
+
+---
+
+## Version 0.3.1-vr
+
+### Notes
+
+Just fixing up some controller bindings stuff
+
+### Fixed
+
+  * Controller bindings should now work for all headsets
 
 ---
 

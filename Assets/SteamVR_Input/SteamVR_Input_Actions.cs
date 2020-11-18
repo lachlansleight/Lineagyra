@@ -17,139 +17,139 @@ namespace Valve.VR
     public partial class SteamVR_Actions
     {
         
-        private static SteamVR_Action_Boolean p_default_InteractUI;
+        private static SteamVR_Action_Boolean p_lineaGyra_InteractUI;
         
-        private static SteamVR_Action_Pose p_default_Pose;
+        private static SteamVR_Action_Pose p_lineaGyra_Pose;
         
-        private static SteamVR_Action_Skeleton p_default_SkeletonLeftHand;
+        private static SteamVR_Action_Skeleton p_lineaGyra_SkeletonLeftHand;
         
-        private static SteamVR_Action_Skeleton p_default_SkeletonRightHand;
+        private static SteamVR_Action_Skeleton p_lineaGyra_SkeletonRightHand;
         
-        private static SteamVR_Action_Boolean p_default_HeadsetOnHead;
+        private static SteamVR_Action_Boolean p_lineaGyra_HeadsetOnHead;
         
-        private static SteamVR_Action_Boolean p_default_Menu;
+        private static SteamVR_Action_Boolean p_lineaGyra_Menu;
         
-        private static SteamVR_Action_Single p_default_Grab;
+        private static SteamVR_Action_Single p_lineaGyra_Grab;
         
-        private static SteamVR_Action_Vibration p_default_Haptic;
+        private static SteamVR_Action_Vibration p_lineaGyra_Haptic;
         
-        public static SteamVR_Action_Boolean default_InteractUI
+        public static SteamVR_Action_Boolean lineaGyra_InteractUI
         {
             get
             {
-                return SteamVR_Actions.p_default_InteractUI.GetCopy<SteamVR_Action_Boolean>();
+                return SteamVR_Actions.p_lineaGyra_InteractUI.GetCopy<SteamVR_Action_Boolean>();
             }
         }
         
-        public static SteamVR_Action_Pose default_Pose
+        public static SteamVR_Action_Pose lineaGyra_Pose
         {
             get
             {
-                return SteamVR_Actions.p_default_Pose.GetCopy<SteamVR_Action_Pose>();
+                return SteamVR_Actions.p_lineaGyra_Pose.GetCopy<SteamVR_Action_Pose>();
             }
         }
         
-        public static SteamVR_Action_Skeleton default_SkeletonLeftHand
+        public static SteamVR_Action_Skeleton lineaGyra_SkeletonLeftHand
         {
             get
             {
-                return SteamVR_Actions.p_default_SkeletonLeftHand.GetCopy<SteamVR_Action_Skeleton>();
+                return SteamVR_Actions.p_lineaGyra_SkeletonLeftHand.GetCopy<SteamVR_Action_Skeleton>();
             }
         }
         
-        public static SteamVR_Action_Skeleton default_SkeletonRightHand
+        public static SteamVR_Action_Skeleton lineaGyra_SkeletonRightHand
         {
             get
             {
-                return SteamVR_Actions.p_default_SkeletonRightHand.GetCopy<SteamVR_Action_Skeleton>();
+                return SteamVR_Actions.p_lineaGyra_SkeletonRightHand.GetCopy<SteamVR_Action_Skeleton>();
             }
         }
         
-        public static SteamVR_Action_Boolean default_HeadsetOnHead
+        public static SteamVR_Action_Boolean lineaGyra_HeadsetOnHead
         {
             get
             {
-                return SteamVR_Actions.p_default_HeadsetOnHead.GetCopy<SteamVR_Action_Boolean>();
+                return SteamVR_Actions.p_lineaGyra_HeadsetOnHead.GetCopy<SteamVR_Action_Boolean>();
             }
         }
         
-        public static SteamVR_Action_Boolean default_Menu
+        public static SteamVR_Action_Boolean lineaGyra_Menu
         {
             get
             {
-                return SteamVR_Actions.p_default_Menu.GetCopy<SteamVR_Action_Boolean>();
+                return SteamVR_Actions.p_lineaGyra_Menu.GetCopy<SteamVR_Action_Boolean>();
             }
         }
         
-        public static SteamVR_Action_Single default_Grab
+        public static SteamVR_Action_Single lineaGyra_Grab
         {
             get
             {
-                return SteamVR_Actions.p_default_Grab.GetCopy<SteamVR_Action_Single>();
+                return SteamVR_Actions.p_lineaGyra_Grab.GetCopy<SteamVR_Action_Single>();
             }
         }
         
-        public static SteamVR_Action_Vibration default_Haptic
+        public static SteamVR_Action_Vibration lineaGyra_Haptic
         {
             get
             {
-                return SteamVR_Actions.p_default_Haptic.GetCopy<SteamVR_Action_Vibration>();
+                return SteamVR_Actions.p_lineaGyra_Haptic.GetCopy<SteamVR_Action_Vibration>();
             }
         }
         
         private static void InitializeActionArrays()
         {
             Valve.VR.SteamVR_Input.actions = new Valve.VR.SteamVR_Action[] {
-                    SteamVR_Actions.default_InteractUI,
-                    SteamVR_Actions.default_Pose,
-                    SteamVR_Actions.default_SkeletonLeftHand,
-                    SteamVR_Actions.default_SkeletonRightHand,
-                    SteamVR_Actions.default_HeadsetOnHead,
-                    SteamVR_Actions.default_Menu,
-                    SteamVR_Actions.default_Grab,
-                    SteamVR_Actions.default_Haptic};
+                    SteamVR_Actions.lineaGyra_InteractUI,
+                    SteamVR_Actions.lineaGyra_Pose,
+                    SteamVR_Actions.lineaGyra_SkeletonLeftHand,
+                    SteamVR_Actions.lineaGyra_SkeletonRightHand,
+                    SteamVR_Actions.lineaGyra_HeadsetOnHead,
+                    SteamVR_Actions.lineaGyra_Menu,
+                    SteamVR_Actions.lineaGyra_Grab,
+                    SteamVR_Actions.lineaGyra_Haptic};
             Valve.VR.SteamVR_Input.actionsIn = new Valve.VR.ISteamVR_Action_In[] {
-                    SteamVR_Actions.default_InteractUI,
-                    SteamVR_Actions.default_Pose,
-                    SteamVR_Actions.default_SkeletonLeftHand,
-                    SteamVR_Actions.default_SkeletonRightHand,
-                    SteamVR_Actions.default_HeadsetOnHead,
-                    SteamVR_Actions.default_Menu,
-                    SteamVR_Actions.default_Grab};
+                    SteamVR_Actions.lineaGyra_InteractUI,
+                    SteamVR_Actions.lineaGyra_Pose,
+                    SteamVR_Actions.lineaGyra_SkeletonLeftHand,
+                    SteamVR_Actions.lineaGyra_SkeletonRightHand,
+                    SteamVR_Actions.lineaGyra_HeadsetOnHead,
+                    SteamVR_Actions.lineaGyra_Menu,
+                    SteamVR_Actions.lineaGyra_Grab};
             Valve.VR.SteamVR_Input.actionsOut = new Valve.VR.ISteamVR_Action_Out[] {
-                    SteamVR_Actions.default_Haptic};
+                    SteamVR_Actions.lineaGyra_Haptic};
             Valve.VR.SteamVR_Input.actionsVibration = new Valve.VR.SteamVR_Action_Vibration[] {
-                    SteamVR_Actions.default_Haptic};
+                    SteamVR_Actions.lineaGyra_Haptic};
             Valve.VR.SteamVR_Input.actionsPose = new Valve.VR.SteamVR_Action_Pose[] {
-                    SteamVR_Actions.default_Pose};
+                    SteamVR_Actions.lineaGyra_Pose};
             Valve.VR.SteamVR_Input.actionsBoolean = new Valve.VR.SteamVR_Action_Boolean[] {
-                    SteamVR_Actions.default_InteractUI,
-                    SteamVR_Actions.default_HeadsetOnHead,
-                    SteamVR_Actions.default_Menu};
+                    SteamVR_Actions.lineaGyra_InteractUI,
+                    SteamVR_Actions.lineaGyra_HeadsetOnHead,
+                    SteamVR_Actions.lineaGyra_Menu};
             Valve.VR.SteamVR_Input.actionsSingle = new Valve.VR.SteamVR_Action_Single[] {
-                    SteamVR_Actions.default_Grab};
+                    SteamVR_Actions.lineaGyra_Grab};
             Valve.VR.SteamVR_Input.actionsVector2 = new Valve.VR.SteamVR_Action_Vector2[0];
             Valve.VR.SteamVR_Input.actionsVector3 = new Valve.VR.SteamVR_Action_Vector3[0];
             Valve.VR.SteamVR_Input.actionsSkeleton = new Valve.VR.SteamVR_Action_Skeleton[] {
-                    SteamVR_Actions.default_SkeletonLeftHand,
-                    SteamVR_Actions.default_SkeletonRightHand};
+                    SteamVR_Actions.lineaGyra_SkeletonLeftHand,
+                    SteamVR_Actions.lineaGyra_SkeletonRightHand};
             Valve.VR.SteamVR_Input.actionsNonPoseNonSkeletonIn = new Valve.VR.ISteamVR_Action_In[] {
-                    SteamVR_Actions.default_InteractUI,
-                    SteamVR_Actions.default_HeadsetOnHead,
-                    SteamVR_Actions.default_Menu,
-                    SteamVR_Actions.default_Grab};
+                    SteamVR_Actions.lineaGyra_InteractUI,
+                    SteamVR_Actions.lineaGyra_HeadsetOnHead,
+                    SteamVR_Actions.lineaGyra_Menu,
+                    SteamVR_Actions.lineaGyra_Grab};
         }
         
         private static void PreInitActions()
         {
-            SteamVR_Actions.p_default_InteractUI = ((SteamVR_Action_Boolean)(SteamVR_Action.Create<SteamVR_Action_Boolean>("/actions/default/in/InteractUI")));
-            SteamVR_Actions.p_default_Pose = ((SteamVR_Action_Pose)(SteamVR_Action.Create<SteamVR_Action_Pose>("/actions/default/in/Pose")));
-            SteamVR_Actions.p_default_SkeletonLeftHand = ((SteamVR_Action_Skeleton)(SteamVR_Action.Create<SteamVR_Action_Skeleton>("/actions/default/in/SkeletonLeftHand")));
-            SteamVR_Actions.p_default_SkeletonRightHand = ((SteamVR_Action_Skeleton)(SteamVR_Action.Create<SteamVR_Action_Skeleton>("/actions/default/in/SkeletonRightHand")));
-            SteamVR_Actions.p_default_HeadsetOnHead = ((SteamVR_Action_Boolean)(SteamVR_Action.Create<SteamVR_Action_Boolean>("/actions/default/in/HeadsetOnHead")));
-            SteamVR_Actions.p_default_Menu = ((SteamVR_Action_Boolean)(SteamVR_Action.Create<SteamVR_Action_Boolean>("/actions/default/in/Menu")));
-            SteamVR_Actions.p_default_Grab = ((SteamVR_Action_Single)(SteamVR_Action.Create<SteamVR_Action_Single>("/actions/default/in/Grab")));
-            SteamVR_Actions.p_default_Haptic = ((SteamVR_Action_Vibration)(SteamVR_Action.Create<SteamVR_Action_Vibration>("/actions/default/out/Haptic")));
+            SteamVR_Actions.p_lineaGyra_InteractUI = ((SteamVR_Action_Boolean)(SteamVR_Action.Create<SteamVR_Action_Boolean>("/actions/LineaGyra/in/InteractUI")));
+            SteamVR_Actions.p_lineaGyra_Pose = ((SteamVR_Action_Pose)(SteamVR_Action.Create<SteamVR_Action_Pose>("/actions/LineaGyra/in/Pose")));
+            SteamVR_Actions.p_lineaGyra_SkeletonLeftHand = ((SteamVR_Action_Skeleton)(SteamVR_Action.Create<SteamVR_Action_Skeleton>("/actions/LineaGyra/in/SkeletonLeftHand")));
+            SteamVR_Actions.p_lineaGyra_SkeletonRightHand = ((SteamVR_Action_Skeleton)(SteamVR_Action.Create<SteamVR_Action_Skeleton>("/actions/LineaGyra/in/SkeletonRightHand")));
+            SteamVR_Actions.p_lineaGyra_HeadsetOnHead = ((SteamVR_Action_Boolean)(SteamVR_Action.Create<SteamVR_Action_Boolean>("/actions/LineaGyra/in/HeadsetOnHead")));
+            SteamVR_Actions.p_lineaGyra_Menu = ((SteamVR_Action_Boolean)(SteamVR_Action.Create<SteamVR_Action_Boolean>("/actions/LineaGyra/in/Menu")));
+            SteamVR_Actions.p_lineaGyra_Grab = ((SteamVR_Action_Single)(SteamVR_Action.Create<SteamVR_Action_Single>("/actions/LineaGyra/in/Grab")));
+            SteamVR_Actions.p_lineaGyra_Haptic = ((SteamVR_Action_Vibration)(SteamVR_Action.Create<SteamVR_Action_Vibration>("/actions/LineaGyra/out/Haptic")));
         }
     }
 }
