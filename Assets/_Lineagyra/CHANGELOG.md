@@ -1,6 +1,39 @@
 # Linea Gyra Changelog
 
-#### Last Update by Lachlan Sleight on 23/09/2020
+#### Last Update by Lachlan Sleight on 18/11/2020
+
+---
+
+## Version 0.3.1-vr
+
+### Notes
+
+Just fixing up some controller bindings stuff
+
+### Fixed
+
+  * Controller bindings should now work for all headsets
+
+---
+
+## Version 0.3.0-vr
+
+### Notes
+
+This is version 0.3.0 (more or less), only in VR
+
+### Added
+
+  * Added VR support, obviously!
+  * Added a welcome screen to explain the controls for those who can't check out the readme
+  * Added basic 6DOF locomotion
+  * Made the UI movable in 3D space
+  * Added some particles to the environment
+  * Added a looping audio track
+
+### Changed
+
+  * The Line and Fill Opacity sliders had their range changed to 0% - 25% (from 0% - 100%)
 
 ---
 

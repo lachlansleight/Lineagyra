@@ -9,6 +9,8 @@ using UnityEngine.UI;
 [RequireComponent(typeof(Canvas))]
 public class MainUiController : MonoBehaviour
 {
+    public bool StartMenuOn = true;
+    
     private Button[] _navButtons;
     private GameObject[] _pages;
     private GameObject _mainPanel;
@@ -16,24 +18,24 @@ public class MainUiController : MonoBehaviour
     private Slider _fovSlider;
 
     private Dropdown _targetParameterDropdown;
-    public GameObject _shapeDropdownParent;
+    private GameObject _shapeDropdownParent;
     private Dropdown _shapeDropdown;
-    public GameObject _centerSliderParent;
+    private GameObject _centerSliderParent;
     private Slider _centerSlider;
     private InputField _centerInput;
-    public GameObject _amplitudeSliderParent;
+    private GameObject _amplitudeSliderParent;
     private Slider _amplitudeSlider;
     private InputField _amplitudeInput;
-    public GameObject _periodSliderParent;
+    private GameObject _periodSliderParent;
     private Slider _periodSlider;
     private InputField _periodInput;
-    public GameObject _phaseSliderParent;
+    private GameObject _phaseSliderParent;
     private Slider _phaseSlider;
     private InputField _phaseInput;
-    public GameObject _lineCountSliderParent;
-    public Slider _lineCountSlider;
-    public GameObject _sphericalToggleParent;
-    public Toggle _sphericalToggle;
+    private GameObject _lineCountSliderParent;
+    private Slider _lineCountSlider;
+    private GameObject _sphericalToggleParent;
+    private Toggle _sphericalToggle;
     private Text _warningText;
 
     private Camera _camera;
@@ -46,7 +48,8 @@ public class MainUiController : MonoBehaviour
     private CameraControl _cameraControl;
     private LineCirclePauser _pauser;
 
-    private bool _menuVisible;
+    [HideInInspector]
+    public bool MenuVisible;
     
     private void OnEnable()
     {
@@ -72,7 +75,7 @@ public class MainUiController : MonoBehaviour
         _lineCircle.OnPatternChanged += HandlePatternChanged;
 
         NavigateToPage(0);
-        SetMenu(false);
+        SetMenu(StartMenuOn);
     }
 
     private void SetupContainerControls(Transform container)
@@ -107,7 +110,7 @@ public class MainUiController : MonoBehaviour
         //Field of View
         _fovSlider = panel.Find("FieldOfView/Slider").GetComponent<Slider>();
         _fovSlider.value = _camera.fieldOfView;
-        _fovSlider.onValueChanged.AddListener(newValue => _cameraControl.SetTargetSize(newValue));
+        _fovSlider.onValueChanged.AddListener(newValue => _cameraControl?.SetTargetSize(newValue));
         
         //Bloom Toggle
         var bloomToggle = panel.Find("Bloom/Toggle").GetComponent<Toggle>();
@@ -353,9 +356,9 @@ public class MainUiController : MonoBehaviour
 
     private void Update()
     {
-        if(Input.GetKeyDown(KeyCode.Escape)) SetMenu(!_menuVisible);
+        if(Input.GetKeyDown(KeyCode.Escape)) SetMenu(!MenuVisible);
 
-        if (_menuVisible && _pages[3].activeSelf) {
+        if (MenuVisible && _pages[3].activeSelf) {
             if (_shuffler.DoAutoShuffle) {
                 _warningText.text = $"Warning - Auto Shuffle will discard any changes made in this panel. " +
                                     $"Turn Auto Shuffle off to keep any changes made\n" +
@@ -363,22 +366,29 @@ public class MainUiController : MonoBehaviour
             } else _warningText.text = "";
         }
 
-        if (_menuVisible && _pages[0].activeSelf) {
-            _fovSlider.value = _cameraControl.GetTargetFov();
+        if (MenuVisible && _pages[0].activeSelf) {
+            _fovSlider.value = _cameraControl ? _cameraControl.GetTargetFov() : 0f;
         }
     }
     
-    private void SetMenu(bool visible)
+    public void SetMenu(bool visible)
     {
         _mainPanel.SetActive(visible);
-        _menuVisible = visible;
+        MenuVisible = visible;
+        //set layer to 'default' to prevent raycasting and thus showing the laser pointer
+        gameObject.layer = visible ? 5 : 0;
 
-        if (_menuVisible) {
+        if (MenuVisible) {
             _fovSlider.value = _camera.fieldOfView;
             HandleNewTargetParameter(_targetParameterDropdown.value);
         }
 
         //_cameraControl.enabled = !_menuVisible;
+    }
+
+    public void ToggleMenu()
+    {
+        SetMenu(!MenuVisible);
     }
 
     private void NavigateToPage(int page)
