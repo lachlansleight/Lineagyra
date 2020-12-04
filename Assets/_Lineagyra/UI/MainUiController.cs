@@ -181,6 +181,16 @@ public class MainUiController : MonoBehaviour
         var autoScaleLines = panel.Find("AutoScaleLines/Toggle").GetComponent<Toggle>();
         autoScaleLines.isOn = _patternOverrides.AutoScaleLines;
         autoScaleLines.onValueChanged.AddListener(newValue => _patternOverrides.AutoScaleLines = newValue);
+        
+        //Time to Z
+        var timeToZ = panel.Find("TimeToZ/Slider").GetComponent<Slider>();
+        timeToZ.value = _patternOverrides.TimeToZ;
+        timeToZ.onValueChanged.AddListener(newValue => _patternOverrides.TimeToZ = newValue);
+        
+        //ZFade
+        var zFade = panel.Find("ZFade/Slider").GetComponent<Slider>();
+        zFade.value = _patternOverrides.ZFade;
+        zFade.onValueChanged.AddListener(newValue => _patternOverrides.ZFade = newValue);
     }
 
     private void SetupGeneratorControls()
@@ -190,7 +200,21 @@ public class MainUiController : MonoBehaviour
         //3D Mode
         var mode3D = panel.Find("3DMode/Toggle").GetComponent<Toggle>();
         mode3D.isOn = !_shuffler.Generator.RestrictThirdDimension;
-        mode3D.onValueChanged.AddListener(newValue => _shuffler.Generator.RestrictThirdDimension = !newValue);   
+        mode3D.onValueChanged.AddListener(newValue =>
+        {
+            _shuffler.Generator.RestrictThirdDimension = !newValue;
+            //make sure time to Z is false in 3D mode!
+            if (newValue) {
+                _patternOverrides.TimeToZ = 0;
+                _patternOverrides.ZFade = float.MaxValue;
+            }
+            //this is a horrible hack :c
+            //todo: for real fix this
+            else {
+                _patternOverrides.TimeToZ = _pages[1].transform.Find("TimeToZ/Slider").GetComponent<Slider>().value;
+                _patternOverrides.ZFade = _pages[1].transform.Find("ZFade/Slider").GetComponent<Slider>().value;
+            }
+        });   
         
         //Oscillate Timespan
         var oscillateTimespan = panel.Find("OscillateTimespan/Toggle").GetComponent<Toggle>();

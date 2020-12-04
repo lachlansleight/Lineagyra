@@ -1,6 +1,18 @@
 # Linea Gyra Changelog
 
-#### Last Update by Lachlan Sleight on 18/11/2020
+#### Last Update by Lachlan Sleight on 04/12/2020
+
+---
+
+## Version 0.4.0
+
+### Notes
+
+Added a great new feature!
+
+### Added
+
+  * The Pattern menu now has two new options - Time to Distance, and Fade with Distance. Try turning Time to Distance to 0.05 or so and moving the camera around!
 
 ---
 
